@@ -94,3 +94,74 @@ class UIDAIGenerateOTP(Resource):
             )
 
 
+@aadhaar_verifier_api_ns.route("/uidai_verify_aadhaar/")
+@aadhaar_verifier_api_ns.expect(uidai_verify_aadhaar_api_request_parser)
+class UIDAIVerifyAadhaar(Resource):
+
+    @aadhaar_verifier_api_ns.doc(description="UIDAI Verify Aadhaar")
+    @aadhaar_verifier_api_ns.response(
+        code=200, description="OK", model=uidai_verify_aadhaar_api_response_model
+    )
+    @aadhaar_verifier_api_ns.response(
+        code=400, description="BAD REQUEST", model=task_api_400_error_response_model
+    )
+    @aadhaar_verifier_api_ns.response(
+        code=422,
+        description="UNPROCESSABLE ENTITY",
+        model=task_api_422_error_response_model,
+    )
+    @aadhaar_verifier_api_ns.response(
+        code=500,
+        description="INTERNAL SERVER ERROR",
+        model=task_api_500_error_response_model,
+    )
+    @timeit
+    def post(self):
+        try:
+            current_app.logger.info("API EXECUTION START")
+
+            args = uidai_generate_otp_api_request_parser.parse_args()
+            api_arguments_validator = ApiArgumentsValidator(**args)
+
+            aadhaar_no = api_arguments_validator.aadhaar_no
+            otp = api_arguments_validator.otp
+
+            current_app.logger.info("Api arguments validation ... DONE")
+
+            aadhaar_db_json_path = os.path.join(
+                BASE_DIR,
+                os.getenv("AADHAAR_DB_JSON_PATH", "core/aadhaar_db/aadhaar_info.json"),
+            )
+
+            with open(aadhaar_db_json_path, "r") as fd:
+                aadhaar_data = json.load(fd)
+
+            if aadhaar_no in aadhaar_data:
+                status = Status.SUCCESS
+                aadhaar_info = aadhaar_data[aadhaar_no]
+            else:
+                status = Status.FAILURE
+                aadhaar_info = {}
+
+            response = {
+                "status": status,
+                # "aadhaar_info": aadhaar_info
+            }
+
+            current_app.logger.info(f"response: {response}")
+
+            current_app.logger.info("API EXECUTION END")
+
+            return response, 200
+
+        except TaskApiException as e:
+            return e.task_api_error_response_model, e.task_api_error_response_model.get(
+                "code"
+            )
+        except Exception as e:
+            error_message = f"Error: {e}"
+            current_app.logger.error(error_message)
+            task_api_error_response_model = {"code": 422, "message": error_message}
+            return task_api_error_response_model, task_api_error_response_model.get(
+                "code"
+            )
