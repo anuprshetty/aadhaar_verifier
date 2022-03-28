@@ -1,0 +1,12 @@
+version: "3" # Version of docker-compose
+
+services:
+  aadhaar-verifier:
+    build: .
+    container_name: aadhaar-verifier-container
+    hostname: aadhaar-verifier
+    restart: "no"
+    environment:
+      AADHAAR_DB_JSON_PATH: "core/aadhaar_db/aadhaar_info.json"
+    ports:
+      - "9000:9000"
