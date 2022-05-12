@@ -1,0 +1,23 @@
+{
+  "123456789011": {
+    "aadhaar_no": "123456789011",
+    "name": "Anup Shetty",
+    "dob": "01/01/2000",
+    "gender": "Male",
+    "address": "Udupi, Karnataka - 123456"
+  },
+  "123456789022": {
+    "aadhaar_no": "123456789022",
+    "name": "Alice",
+    "dob": "06/01/2010",
+    "gender": "Female",
+    "address": "Hyderabad, Telangana - 345678"
+  },
+  "123456789033": {
+    "aadhaar_no": "123456789033",
+    "name": "Jack",
+    "dob": "01/07/2005",
+    "gender": "Male",
+    "address": "Bengaluru, Karnataka - 987654"
+  }
+}
