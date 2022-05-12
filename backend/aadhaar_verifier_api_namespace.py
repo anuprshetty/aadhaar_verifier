@@ -44,7 +44,7 @@ class UIDAIGenerateOTP(Resource):
 
             current_app.logger.info("Api arguments validation ... DONE")
 
-            aadhaar_db_json_path = os.path.join(BASE_DIR, os.getenv("AADHAAR_DB_JSON_PATH"), 'core/aadhaar_db/aadhaar_info.json')
+            aadhaar_db_json_path = os.path.join(BASE_DIR, os.getenv("AADHAAR_DB_JSON_PATH", 'core/aadhaar_db/aadhaar_info.json'))
 
             with open(aadhaar_db_json_path, "r") as fd:
                 aadhaar_data = json.load(fd)
@@ -98,7 +98,7 @@ class UIDAIVerifyAadhaar(Resource):
 
             current_app.logger.info("Api arguments validation ... DONE")
 
-            aadhaar_db_json_path = os.path.join(BASE_DIR, os.getenv("AADHAAR_DB_JSON_PATH"), 'core/aadhaar_db/aadhaar_info.json')
+            aadhaar_db_json_path = os.path.join(BASE_DIR, os.getenv("AADHAAR_DB_JSON_PATH", 'core/aadhaar_db/aadhaar_info.json'))
 
             with open(aadhaar_db_json_path, "r") as fd:
                 aadhaar_data = json.load(fd)
@@ -112,7 +112,7 @@ class UIDAIVerifyAadhaar(Resource):
 
             response = {
                 "status": status,
-                "aadhaar_info": aadhaar_info
+                # "aadhaar_info": aadhaar_info
             }
 
             current_app.logger.info(f"response: {response}")

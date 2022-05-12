@@ -15,13 +15,13 @@ uidai_verify_aadhaar_api_response_model = aadhaar_verifier_api_ns.model(
     name='uidai_verify_aadhaar_api_response_model',
     model={
         'status': fields.String(required=True, description='Status'),
-        'aadhaar_info': {
-            'aadhaar_no': fields.String(required=False, description='aadhaar_no'),
-            'name': fields.String(required=False, description='name'),
-            'dob': fields.String(required=False, description='dob'),
-            'gender': fields.String(required=False, description='gender'),
-            'address': fields.String(required=False, description='address')
-        }
+        # 'aadhaar_info': {
+        #     'aadhaar_no': fields.String(required=False, description='aadhaar_no'),
+        #     'name': fields.String(required=False, description='name'),
+        #     'dob': fields.String(required=False, description='dob'),
+        #     'gender': fields.String(required=False, description='gender'),
+        #     'address': fields.String(required=False, description='address')
+        # }
     }
 )
 
