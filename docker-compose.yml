@@ -1,0 +1,9 @@
+version: '3' # Version of docker-compose
+
+services:
+  aadhaar-verifier:
+    build: .
+    container_name: aadhaar-verifier-container
+    restart: on-failure
+    ports:
+      - "9000:9000"
